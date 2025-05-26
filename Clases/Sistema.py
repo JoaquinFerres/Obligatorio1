@@ -27,13 +27,13 @@ class Sistema:
         return self.ultimo_codigo_pieza
 
     def descripcion_pieza_existe(self, descripcion):
-        return any(p.descripcion.lower() == descripcion.lower() for p in self.piezas)
-
+        return any(p.descripcion() == descripcion() for p in self.piezas)
+        pass
     def registrar_pieza(self):
         print("\n--- Registrar nueva pieza ---")
         while True:
             try:
-                descripcion = input("Descripción: ").strip()
+                descripcion = input("Descripción: ")
                 if not descripcion:
                     raise ValueError("La descripción no puede estar vacía.")
                 if self.descripcion_pieza_existe(descripcion):
@@ -47,7 +47,7 @@ class Sistema:
                 if lote <= 0:
                     raise ValueError("El lote debe ser mayor a 0.")
 
-                cantidad = input("Cantidad disponible [0 por defecto]: ").strip()
+                cantidad = input("Cantidad disponible [0 por defecto]: ")
                 cantidad = int(cantidad) if cantidad else 0
                 if cantidad < 0:
                     raise ValueError("La cantidad no puede ser negativa.")
@@ -70,10 +70,10 @@ class Sistema:
         print("\n--- Registrar nueva máquina ---")
         while True:
             try:
-                descripcion = input("Descripción: ").strip()
+                descripcion = input("Descripción: ")
                 if not descripcion:
                     raise ValueError("La descripción no puede estar vacía.")
-                if any(m.descripcion.lower() == descripcion.lower() for m in self.maquinas):
+                if any(m.descripcion() == descripcion() for m in self.maquinas):
                     raise ExcepcionMaquinaYaExiste(f"La máquina con descripción '{descripcion}' ya existe.")
 
                 codigo = len(self.maquinas) + 1
@@ -85,7 +85,7 @@ class Sistema:
                     return
 
                 while True:
-                    agregar = input("¿Agregar requisito de pieza? (Sí/No): ").strip().lower()
+                    agregar = input("¿Agregar requisito de pieza? (Sí/No): ")
                     if agregar == "no":
                         break
                     elif agregar == "sí" or agregar == "si":
@@ -137,36 +137,36 @@ class Sistema:
         print("\n--- Registrar nuevo cliente ---")
         while True:
             try:
-                tipo = input("Tipo de cliente (1: Particular, 2: Empresa): ").strip()
+                tipo = input("Tipo de cliente (1: Particular, 2: Empresa): ")
                 if tipo not in ("1", "2"):
                     raise ValueError("Opción inválida. Debe ser 1 o 2.")
 
                 id_cliente = len(self.clientes) + 1
 
                 if tipo == "1":
-                    cedula = input("Cédula: ").strip()
+                    cedula = input("Cédula: ")
                     if not cedula:
                         raise ValueError("La cédula no puede estar vacía.")
                     if any(isinstance(c, ClienteParticular) and c.cedula == cedula for c in self.clientes):
                         raise ExcepcionClienteYaExiste("Ya existe un cliente con esa cédula.")
 
-                    nombre = input("Nombre completo: ").strip()
-                    telefono = input("Teléfono: ").strip()
-                    email = input("Correo electrónico: ").strip()
+                    nombre = input("Nombre completo: ")
+                    telefono = input("Teléfono: ")
+                    email = input("Correo electrónico: ")
 
                     cliente = ClienteParticular(id_cliente, cedula, nombre, telefono, email)
 
                 else:
-                    rut = input("RUT: ").strip()
+                    rut = input("RUT: ")
                     if not rut:
                         raise ValueError("El RUT no puede estar vacío.")
                     if any(isinstance(c, Empresa) and c.rut == rut for c in self.clientes):
                         raise ExcepcionClienteYaExiste("Ya existe una empresa con ese RUT.")
 
-                    nombre = input("Nombre: ").strip()
-                    web = input("Página web: ").strip()
-                    telefono = input("Teléfono: ").strip()
-                    email = input("Correo electrónico: ").strip()
+                    nombre = input("Nombre: ")
+                    web = input("Página web: ")
+                    telefono = input("Teléfono: ")
+                    email = input("Correo electrónico: ")
 
                     cliente = Empresa(id_cliente, rut, nombre, web, telefono, email)
 
