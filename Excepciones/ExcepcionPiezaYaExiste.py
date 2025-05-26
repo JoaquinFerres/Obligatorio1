@@ -1,0 +1,2 @@
+class ExcepcionPiezaYaExiste(Exception):
+    pass
