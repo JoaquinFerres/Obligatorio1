@@ -1,0 +1,2 @@
+class ExcepcionClienteYaExiste(Exception):
+    pass

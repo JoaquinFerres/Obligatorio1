@@ -1,0 +1,2 @@
+class ExcepcionMaquinaYaExiste(Exception):
+    pass
