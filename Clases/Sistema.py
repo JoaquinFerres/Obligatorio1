@@ -1,5 +1,5 @@
-from Clases.Pieza import Pieza
-from Excepciones.ExcepcionPiezaYaExiste import ExcepcionPiezaYaExiste
+from pieza import Pieza
+from Excepciones.excepcion_pieza_ya_existe import ExcepcionPiezaYaExiste
 
 class Sistema:
     def __init__(self):
