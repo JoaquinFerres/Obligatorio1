@@ -6,4 +6,4 @@ class Pedido:
         self.maquina = maquina
         self.fecha_recepcion = fecha_recepcion or datetime.now()
         self.fecha_entrega = None
-        self.estado = "pendiente"  # o "entregado"
+        self.estado = "pendiente"  or "entregado"
