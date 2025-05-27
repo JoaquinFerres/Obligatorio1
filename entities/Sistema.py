@@ -49,10 +49,7 @@ class Sistema:
                 if lote <= 0:
                     raise ValueError("El lote debe ser mayor a 0.")
 
-                cantidad = input("Cantidad disponible [0 por defecto]: ")
-                cantidad = int(cantidad) if cantidad else 0
-                if cantidad < 0:
-                    raise ValueError("La cantidad no puede ser negativa.")
+                cantidad = 0
 
                 codigo = self.generar_codigo_pieza()
                 nueva_pieza = Pieza(codigo, descripcion, costo, lote, cantidad)
@@ -281,7 +278,81 @@ class Sistema:
             print(f"\n Reposición registrada:\n{reposicion}")
             print(f" Stock actualizado: {pieza.cantidad_disponible} unidades disponibles")
 
+            self.completar_pedidos_pendientes()
+
         except ValueError:
             print("  Entrada inválida.")
 
         
+#Completar pedidos pendientes
+
+    def completar_pedidos_pendientes(self):
+        for pedido in self.pedidos:
+            if pedido.estado == "pendiente":
+                maquina = pedido.maquina
+                puede_entregarse = True
+                for req in maquina.requerimientos:
+                    if req.pieza.cantidad_disponible < req.cantidad:
+                        puede_entregarse = False
+                        break
+    
+                if puede_entregarse:
+                    # Entregar y descontar stock
+                    for req in maquina.requerimientos:
+                        req.pieza.cantidad_disponible -= req.cantidad
+                    pedido.entregar()
+                    print(f" Pedido pendiente actualizado a ENTREGADO para cliente {pedido.cliente.id}")
+
+
+
+#listar clientes
+    def listar_clientes(self):
+        print("\n--- Lista de clientes registrados ---")
+        if not self.clientes:
+            print("  No hay clientes registrados.")
+            return
+
+        for cliente in self.clientes:
+            print(cliente)
+
+#listar pedidos
+
+    def listar_pedidos(self):
+        print("\n--- Lista de pedidos ---")
+        if not self.pedidos:
+            print("  No hay pedidos registrados.")
+            return
+
+        print("¿Desea filtrar por estado?")
+        print("1. Sí")
+        print("2. No")
+        opcion_filtro = input("Seleccione una opción: ").strip()
+
+        pedidos_a_mostrar = self.pedidos
+
+        if opcion_filtro == "1":
+            print("1. Pendientes")
+            print("2. Entregados")
+            estado = input("Seleccione el estado: ").strip()
+            if estado == "1":
+                pedidos_a_mostrar = []
+                for pedido in self.pedidos:
+                    if pedido.estado == "pendiente":
+                        pedidos_a_mostrar.append(pedido)
+
+            elif estado == "2":
+                pedidos_a_mostrar = []
+                for pedido in self.pedidos:
+                    if pedido.estado == "entregado":
+                        pedidos_a_mostrar.append(pedido)
+            else:
+                print("  Opción inválida. Mostrando todos los pedidos.")
+
+        if not pedidos_a_mostrar:
+            print("  No hay pedidos con ese filtro.")
+            return
+
+        for pedido in pedidos_a_mostrar:
+            print(pedido)
+
+
