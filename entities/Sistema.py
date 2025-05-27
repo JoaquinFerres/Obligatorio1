@@ -1,11 +1,11 @@
-from entities.pieza import Pieza
-from Excepciones.ExcepcionPiezaYaExiste import ExcepcionPiezaYaExiste
-from entities.Maquina import Maquina
-from entities.Requerimiento import Requerimiento
-from Excepciones.ExcepcionMaquinaYaExiste import ExcepcionMaquinaYaExiste
-from entities.Cliente import ClienteParticular, Empresa
-from Excepciones.ExcepcionClienteYaExiste import ExcepcionClienteYaExiste
-from entities.Pedido import Pedido
+from pieza import Pieza
+from ..Excepciones.ExcepcionPiezaYaExiste import ExcepcionPiezaYaExiste
+from Maquina import Maquina
+from Requerimiento import Requerimiento
+from ..Excepciones.ExcepcionMaquinaYaExiste import ExcepcionMaquinaYaExiste
+from Cliente import ClienteParticular, Empresa
+from ..Excepciones.ExcepcionClienteYaExiste import ExcepcionClienteYaExiste
+from Pedido import Pedido
 
 
 
