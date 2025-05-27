@@ -1,4 +1,4 @@
-from Clases.Sistema import Sistema
+from entities.Sistema import Sistema
 
 def mostrar_menu_principal():
     print("\n--MENÚ PRINCIPAL--")
