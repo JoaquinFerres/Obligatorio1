@@ -355,4 +355,53 @@ class Sistema:
         for pedido in pedidos_a_mostrar:
             print(pedido)
 
+#listar piezas
+    def listar_piezas(self):
+        print("\n--- Lista de piezas ---")
+        if not self.piezas:
+            print("  No hay piezas registradas.")
+            return
+
+        for pieza in self.piezas:
+            faltante = 0
+            for pedido in self.pedidos:
+                if pedido.estado == "pendiente":
+                    for req in pedido.maquina.requerimientos:
+                        if req.pieza.codigo == pieza.codigo:
+                            faltante += req.cantidad
+
+            faltante_real = max(0, faltante - pieza.cantidad_disponible)
+
+            if faltante_real > 0:
+                recomendado = (faltante_real + pieza.lote_reposicion - 1) // pieza.lote_reposicion
+            else:
+                recomendado = 0
+
+            print(f"[{pieza.codigo}] {pieza.descripcion} | Stock: {pieza.cantidad_disponible} | "
+                  f"Lote: {pieza.lote_reposicion} | Faltante: {faltante_real} | "
+                  f"Reponer: {recomendado} lote(s)")
+
+
+#listar maquinas
+
+    def listar_maquinas(self):
+        print("\n--- Lista de máquinas ---")
+        if not self.maquinas:
+            print("  No hay máquinas registradas.")
+            return
+
+        for maquina in self.maquinas:
+            disponible = True
+            for req in maquina.requerimientos:
+                if req.pieza.cantidad_disponible < req.cantidad:
+                    disponible = False
+                    break
+
+            if disponible:
+                estado = "DISPONIBLE"
+            else:
+                estado = "NO DISPONIBLE"
+
+            costo = maquina.calcular_costo_produccion()
+            print(f"[{maquina.codigo}] {maquina.descripcion} | Costo: ${costo:.2f} | Estado: {estado}")
 
