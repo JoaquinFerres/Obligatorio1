@@ -1,11 +1,13 @@
-from pieza import Pieza
-from ..Excepciones.ExcepcionPiezaYaExiste import ExcepcionPiezaYaExiste
-from Maquina import Maquina
-from Requerimiento import Requerimiento
-from ..Excepciones.ExcepcionMaquinaYaExiste import ExcepcionMaquinaYaExiste
-from Cliente import ClienteParticular, Empresa
-from ..Excepciones.ExcepcionClienteYaExiste import ExcepcionClienteYaExiste
-from Pedido import Pedido
+from entities.pieza import Pieza
+from Excepciones.ExcepcionPiezaYaExiste import ExcepcionPiezaYaExiste
+from entities.Maquina import Maquina
+from entities.Requerimiento import Requerimiento
+from Excepciones.ExcepcionMaquinaYaExiste import ExcepcionMaquinaYaExiste
+from entities.Cliente import ClienteParticular, Empresa
+from Excepciones.ExcepcionClienteYaExiste import ExcepcionClienteYaExiste
+from entities.Pedido import Pedido
+from entities.reposicion import Reposicion
+
 
 
 
@@ -240,3 +242,46 @@ class Sistema:
         self.pedidos.append(pedido)
         print(f"Precio de venta: ${pedido.precio_venta:.2f}")
 
+#registrar reposicion
+
+    def registrar_reposicion(self):
+        print("\n--- Registrar reposición de pieza ---")
+        if not self.piezas:
+            print("  No hay piezas registradas.")
+            return
+
+        print("Piezas disponibles:")
+        for p in self.piezas:
+            print(f"[{p.codigo}] {p.descripcion} | Lote: {p.lote_reposicion} | Stock: {p.cantidad_disponible}")
+
+        try:
+            codigo = int(input("Ingrese el código de la pieza: "))
+            pieza = None
+            for p in self.piezas:
+                if p.codigo == codigo:
+                    pieza = p
+                    break
+
+            if not pieza:
+                print("  Pieza no encontrada.")
+                return
+
+            cantidad_lotes = int(input("Cantidad de lotes a reponer: "))
+            if cantidad_lotes <= 0:
+                print("  La cantidad debe ser mayor a 0.")
+                return
+
+            reposicion = Reposicion(pieza, cantidad_lotes)
+            self.reposiciones.append(reposicion)
+
+            # Actualizar stock
+            cantidad_agregada = cantidad_lotes * pieza.lote_reposicion
+            pieza.cantidad_disponible += cantidad_agregada
+
+            print(f"\n Reposición registrada:\n{reposicion}")
+            print(f" Stock actualizado: {pieza.cantidad_disponible} unidades disponibles")
+
+        except ValueError:
+            print("  Entrada inválida.")
+
+        
