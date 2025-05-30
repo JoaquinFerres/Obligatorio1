@@ -122,9 +122,8 @@ class Sistema:
                     return
 
                 self.maquinas.append(maquina)
-                print(f"\n Máquina registrada exitosamente:")
-                print(f" Código: {codigo} | Descripción: {descripcion} | "
-                      f"Requerimientos: {len(maquina.requerimientos)}")
+                print(f"\n Máquina registrada exitosamente:\n{maquina}")
+ 
                 break
 
             except ValueError as ve:
