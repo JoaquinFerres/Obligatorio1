@@ -55,9 +55,8 @@ class Sistema:
                 nueva_pieza = Pieza(codigo, descripcion, costo, lote, cantidad)
                 self.piezas.append(nueva_pieza)
 
-                print(f"\n Pieza registrada exitosamente:")
-                print(f" Código: {codigo} | Descripción: {descripcion} | Costo: ${costo} | "
-                      f"Lote de reposición: {lote} | Stock disponible: {cantidad}")
+                print(f"\n Pieza registrada exitosamente:/n{nueva_pieza}")
+
                 break
 
             except ValueError as ve:
