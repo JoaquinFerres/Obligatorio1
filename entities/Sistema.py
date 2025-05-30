@@ -1,10 +1,10 @@
 from pieza import Pieza
-from entities.excepcion_pieza_ya_existe import ExcepcionPiezaYaExiste
+from excepcion_pieza_ya_existe import ExcepcionPiezaYaExiste
 from maquina import Maquina
 from requerimiento import Requerimiento
-from entities.excepcion_maquina_ya_existe import ExcepcionMaquinaYaExiste
+from excepcion_maquina_ya_existe import ExcepcionMaquinaYaExiste
 from cliente import ClienteParticular, Empresa
-from entities.excepcion_cliente_ya_existe import ExcepcionClienteYaExiste
+from excepcion_cliente_ya_existe import ExcepcionClienteYaExiste
 from pedido import Pedido
 from reposicion import Reposicion
 
@@ -29,7 +29,7 @@ class Sistema:
         return self.ultimo_codigo_pieza
 
     def descripcion_pieza_existe(self, descripcion):
-        return any(p.descripcion() == descripcion() for p in self.piezas)
+        return any(p.descripcion == descripcion for p in self.piezas)
         pass
     def registrar_pieza(self):
         print("\n--- Registrar nueva pieza ---")
