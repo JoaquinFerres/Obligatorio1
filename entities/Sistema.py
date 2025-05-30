@@ -29,7 +29,7 @@ class Sistema:
         return self.ultimo_codigo_pieza
 
     def descripcion_pieza_existe(self, descripcion):
-        return any(p.descripcion() == descripcion() for p in self.piezas)
+        return any(p.descripcion == descripcion for p in self.piezas)
         pass
     def registrar_pieza(self):
         print("\n--- Registrar nueva pieza ---")
@@ -74,7 +74,7 @@ class Sistema:
                 descripcion = input("Descripción: ")
                 if not descripcion:
                     raise ValueError("La descripción no puede estar vacía.")
-                if any(m.descripcion() == descripcion() for m in self.maquinas):
+                if any(m.descripcion == descripcion for m in self.maquinas):
                     raise ExcepcionMaquinaYaExiste(f"La máquina con descripción '{descripcion}' ya existe.")
 
                 codigo = len(self.maquinas) + 1
