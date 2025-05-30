@@ -9,6 +9,6 @@ class Pieza:
 
     def __str__(self):
         return (f"[{self.codigo}] {self.descripcion} | "
-                f"Costo: ${self.costo:.2f} | "
+                f"Costo: ${self.costo} | "
                 f"Lote: {self.lote_reposicion} | "
                 f"Stock: {self.cantidad_disponible}")
