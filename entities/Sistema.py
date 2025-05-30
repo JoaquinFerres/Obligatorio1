@@ -1,10 +1,10 @@
 from pieza import Pieza
-from excepcion_pieza_ya_existe import ExcepcionPiezaYaExiste
+from entities.excepcion_pieza_ya_existe import ExcepcionPiezaYaExiste
 from maquina import Maquina
 from requerimiento import Requerimiento
-from excepcion_maquina_ya_existe import ExcepcionMaquinaYaExiste
+from entities.excepcion_maquina_ya_existe import ExcepcionMaquinaYaExiste
 from cliente import ClienteParticular, Empresa
-from excepcion_cliente_ya_existe import ExcepcionClienteYaExiste
+from entities.excepcion_cliente_ya_existe import ExcepcionClienteYaExiste
 from pedido import Pedido
 from reposicion import Reposicion
 
@@ -29,7 +29,7 @@ class Sistema:
         return self.ultimo_codigo_pieza
 
     def descripcion_pieza_existe(self, descripcion):
-        return any(p.descripcion == descripcion for p in self.piezas)
+        return any(p.descripcion() == descripcion() for p in self.piezas)
         pass
     def registrar_pieza(self):
         print("\n--- Registrar nueva pieza ---")
@@ -55,7 +55,9 @@ class Sistema:
                 nueva_pieza = Pieza(codigo, descripcion, costo, lote, cantidad)
                 self.piezas.append(nueva_pieza)
 
-                print(f"\n Pieza registrada exitosamente:\n{nueva_pieza}")
+                print(f"\n Pieza registrada exitosamente:")
+                print(f" Código: {codigo} | Descripción: {descripcion} | Costo: ${costo:.2f} | "
+                      f"Lote de reposición: {lote} | Stock disponible: {cantidad}")
                 break
 
             except ValueError as ve:
@@ -405,3 +407,26 @@ class Sistema:
             costo = maquina.calcular_costo_produccion()
             print(f"[{maquina.codigo}] {maquina.descripcion} | Costo: ${costo:.2f} | Estado: {estado}")
 
+
+#listar contabilidad
+
+    def mostrar_contabilidad(self):
+        print("\n--- Contabilidad ---")
+
+        costo_total = 0
+        ingreso_total = 0
+
+        for pedido in self.pedidos:
+            if pedido.estado == "entregado":
+                costo_total += pedido.maquina.calcular_costo_produccion()
+                ingreso_total += pedido.precio_venta
+
+        ganancia = ingreso_total - costo_total
+        impuesto = ganancia * 0.25
+        ganancia_final = ganancia - impuesto
+
+        print(f"Costo total de producción: ${costo_total}")
+        print(f"Ingreso total por ventas: ${ingreso_total}")
+        print(f"Ganancia bruta: ${ganancia}")
+        print(f"Impuesto (IRAE 25%): ${impuesto}")
+        print(f"Ganancia neta: ${ganancia_final}")
