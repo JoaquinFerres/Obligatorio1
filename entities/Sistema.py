@@ -55,7 +55,7 @@ class Sistema:
                 nueva_pieza = Pieza(codigo, descripcion, costo, lote, cantidad)
                 self.piezas.append(nueva_pieza)
 
-                print(f"\n Pieza registrada exitosamente:/n{nueva_pieza}")
+                print(f"\n Pieza registrada exitosamente:\n{nueva_pieza}")
 
                 break
 
