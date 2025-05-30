@@ -56,7 +56,7 @@ class Sistema:
                 self.piezas.append(nueva_pieza)
 
                 print(f"\n Pieza registrada exitosamente:")
-                print(f" Código: {codigo} | Descripción: {descripcion} | Costo: ${costo:.2f} | "
+                print(f" Código: {codigo} | Descripción: {descripcion} | Costo: ${costo} | "
                       f"Lote de reposición: {lote} | Stock disponible: {cantidad}")
                 break
 
@@ -123,7 +123,9 @@ class Sistema:
                     return
 
                 self.maquinas.append(maquina)
-                print(f"\n Máquina registrada exitosamente:\n{maquina}")
+                print(f"\n Máquina registrada exitosamente:")
+                print(f" Código: {codigo} | Descripción: {descripcion} | "
+                      f"Requerimientos: {len(maquina.requerimientos)}")
                 break
 
             except ValueError as ve:
