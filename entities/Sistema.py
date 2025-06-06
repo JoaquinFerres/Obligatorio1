@@ -15,13 +15,34 @@ from excepcion_email_invalido import ExcepcionEmailInvalido
 
 class Sistema:
     def __init__(self):
-        self.piezas = []
-        self.maquinas = []
-        self.clientes = []
-        self.pedidos = []
-        self.reposiciones = []
-        self.piezas = []
+        self.__piezas = []
+        self.__maquinas = []
+        self.__clientes = []
+        self.__pedidos = []
+        self.__reposiciones = []
+        self.__piezas = []
         self.ultimo_codigo_pieza = 0
+
+    @property
+    def piezas(self):
+        return self.__piezas
+    @property
+    def maquinas(self):
+        return self.__maquinas
+    @property
+    def clientes(self):
+        return self.__clientes
+    @property
+    def pedidos(self):
+        return self.__pedidos
+    @property
+    def reposiciones(self):
+        return self.__reposiciones
+    @property
+    def piezas(self):
+        return self.__piezas
+
+    
 
 #registrar piezas
 

@@ -1,8 +1,18 @@
 class Maquina:
     def __init__(self, codigo, descripcion):
-        self.codigo = codigo
-        self.descripcion = descripcion
-        self.requerimientos = []  # lista de objetos Requerimiento
+        self.__codigo = codigo
+        self.__descripcion = descripcion
+        self.__requerimientos = []  # lista de objetos Requerimiento
+
+    @property
+    def codigo(self):
+        return self.__codigo
+    @property
+    def descripcion(self):
+        return self.__descripcion
+    @property
+    def requerimientos(self):
+        return self.__requerimientos
 
     def calcular_costo_produccion(self):
         return sum(req.pieza.costo * req.cantidad for req in self.requerimientos)
