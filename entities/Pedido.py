@@ -1,4 +1,5 @@
 from datetime import datetime
+from cliente import Empresa
 
 class Pedido:
     def __init__(self, cliente, maquina):
@@ -12,7 +13,7 @@ class Pedido:
     def calcular_precio_venta(self):
         costo = self.maquina.calcular_costo_produccion()
         precio_base = costo * 1.5
-        if hasattr(self.cliente, 'rut'):  # Si es empresa
+        if isinstance(self.cliente, Empresa):  
             return precio_base * 0.8
         return precio_base
 
