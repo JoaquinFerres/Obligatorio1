@@ -146,7 +146,7 @@ class Sistema:
                 id_cliente = len(self.clientes) + 1
 
                 if tipo == "1":
-                    cedula = input("Cédula (sin el guion): ")
+                    cedula = input("Cédula (sin puntos ni guiones): ")
                     if not cedula.isdigit() or len(cedula) != 8:
                         raise ExcepcionCedulaInvalida("La cédula debe contener exactamente 8 dígitos numéricos.")
                     if not cedula:
