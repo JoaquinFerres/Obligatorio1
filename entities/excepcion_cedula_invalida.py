@@ -1,0 +1,2 @@
+class ExcepcionCedulaInvalida(Exception):
+    pass
