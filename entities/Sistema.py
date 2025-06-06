@@ -7,7 +7,7 @@ from cliente import ClienteParticular, Empresa
 from excepcion_cliente_ya_existe import ExcepcionClienteYaExiste
 from pedido import Pedido
 from reposicion import Reposicion
-
+from excepcion_cedula_invalida import ExcepcionCedulaInvalida
 
 
 
@@ -145,7 +145,9 @@ class Sistema:
                 id_cliente = len(self.clientes) + 1
 
                 if tipo == "1":
-                    cedula = input("Cédula: ")
+                    cedula = input("Cédula (sin el guion): ")
+                    if not cedula.isdigit() or len(cedula) != 8:
+                        raise ExcepcionCedulaInvalida("La cédula debe contener exactamente 8 dígitos numéricos.")
                     if not cedula:
                         raise ValueError("La cédula no puede estar vacía.")
                     if any(isinstance(c, ClienteParticular) and c.cedula == cedula for c in self.clientes):
@@ -179,6 +181,9 @@ class Sistema:
                 print(f"  Error: {ve}")
             except ExcepcionClienteYaExiste as ece:
                 print(f"  Error: {ece}")
+            except ExcepcionCedulaInvalida as eci:
+                print(f"  Error: {eci}")
+
 
 #registrar pedidos
 
