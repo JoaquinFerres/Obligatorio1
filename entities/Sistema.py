@@ -8,7 +8,8 @@ from excepcion_cliente_ya_existe import ExcepcionClienteYaExiste
 from pedido import Pedido
 from reposicion import Reposicion
 from excepcion_cedula_invalida import ExcepcionCedulaInvalida
-
+from excepcion_telefono_invalido import ExcepcionTelefonoInvalido
+from excepcion_email_invalido import ExcepcionEmailInvalido
 
 
 
@@ -155,8 +156,11 @@ class Sistema:
 
                     nombre = input("Nombre completo: ")
                     telefono = input("Teléfono: ")
+                    if not telefono.isdigit() or len(telefono) != 9 or not telefono.startswith("09"):
+                        raise ExcepcionTelefonoInvalido("El teléfono debe tener 9 dígitos y comenzar con '09'.")
                     email = input("Correo electrónico: ")
-
+                    if "@" not in email:
+                        raise ExcepcionEmailInvalido("El correo electrónico debe contener '@'.")
                     cliente = ClienteParticular(id_cliente, cedula, nombre, telefono, email)
 
                 else:
@@ -183,6 +187,10 @@ class Sistema:
                 print(f"  Error: {ece}")
             except ExcepcionCedulaInvalida as eci:
                 print(f"  Error: {eci}")
+            except ExcepcionTelefonoInvalido as eti:
+                print(f"  Error: {eti}")
+            except ExcepcionEmailInvalido as eai:
+                print(f"  Error: {eai}")
 
 
 #registrar pedidos
