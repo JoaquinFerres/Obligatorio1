@@ -1,0 +1,2 @@
+class ExcepcionWebInvalida(Exception):
+    pass

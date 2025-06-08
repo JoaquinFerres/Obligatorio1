@@ -10,6 +10,7 @@ from reposicion import Reposicion
 from excepcion_cedula_invalida import ExcepcionCedulaInvalida
 from excepcion_telefono_invalido import ExcepcionTelefonoInvalido
 from excepcion_email_invalido import ExcepcionEmailInvalido
+from excepcion_web_invalida import ExcepcionWebInvalida
 
 
 
@@ -193,6 +194,8 @@ class Sistema:
 
                     nombre = input("Nombre: ")
                     web = input("Página web: ")
+                    if not web.endswith(".com"):
+                        raise ExcepcionWebInvalida("La página web debe terminar en '.com'.")
                     telefono = input("Teléfono: ")
                     email = input("Correo electrónico: ")
 
@@ -212,6 +215,9 @@ class Sistema:
                 print(f"  Error: {eti}")
             except ExcepcionEmailInvalido as eai:
                 print(f"  Error: {eai}")
+            except ExcepcionWebInvalida as ewi:
+                print(f"  Error: {ewi}")
+
 
 
 #registrar pedidos
