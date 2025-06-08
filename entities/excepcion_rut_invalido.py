@@ -1,0 +1,2 @@
+class ExcepcionRutInvalido(Exception):
+    pass

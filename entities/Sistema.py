@@ -11,7 +11,7 @@ from excepcion_cedula_invalida import ExcepcionCedulaInvalida
 from excepcion_telefono_invalido import ExcepcionTelefonoInvalido
 from excepcion_email_invalido import ExcepcionEmailInvalido
 from excepcion_web_invalida import ExcepcionWebInvalida
-
+from excepcion_rut_invalido import ExcepcionRutInvalido
 
 
 class Sistema:
@@ -191,13 +191,19 @@ class Sistema:
                         raise ValueError("El RUT no puede estar vacío.")
                     if any(isinstance(c, Empresa) and c.rut == rut for c in self.clientes):
                         raise ExcepcionClienteYaExiste("Ya existe una empresa con ese RUT.")
+                    if not rut.isdigit():
+                        raise ExcepcionRutInvalido("El RUT solamente debe contener números.")
 
                     nombre = input("Nombre: ")
                     web = input("Página web: ")
                     if not web.endswith(".com"):
                         raise ExcepcionWebInvalida("La página web debe terminar en '.com'.")
                     telefono = input("Teléfono: ")
+                    if not telefono.isdigit() or len(telefono) != 9 or not telefono.startswith("09"):
+                        raise ExcepcionTelefonoInvalido("El teléfono debe tener 9 dígitos y comenzar con '09'.")
                     email = input("Correo electrónico: ")
+                    if "@" not in email:
+                        raise ExcepcionEmailInvalido("El correo electrónico debe contener '@'.")
 
                     cliente = Empresa(id_cliente, rut, nombre, web, telefono, email)
 
@@ -217,6 +223,8 @@ class Sistema:
                 print(f"  Error: {eai}")
             except ExcepcionWebInvalida as ewi:
                 print(f"  Error: {ewi}")
+            except ExcepcionRutInvalido as eri:
+                print(f"  Error: {eri}")
 
 
 
